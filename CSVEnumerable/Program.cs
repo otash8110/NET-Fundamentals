@@ -3,7 +3,16 @@ using CSVEnumerable.CsvModels;
 
 var csvItems = new CsvEnumerable<Person>("document.csv");
 
-foreach (var item in csvItems)
+var enumerator = csvItems.GetEnumerator();
+
+while (enumerator.MoveNext())
 {
-    Console.WriteLine($"{item.Name}, {item.Id}");
+    Console.WriteLine($"{enumerator.Current.Name}, {enumerator.Current.Id}");
+}
+
+enumerator.Reset();
+
+while (enumerator.MoveNext())
+{
+    Console.WriteLine($"{enumerator.Current.Name}, {enumerator.Current.Id}");
 }
