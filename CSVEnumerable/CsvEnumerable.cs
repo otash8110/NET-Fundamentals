@@ -16,7 +16,7 @@ namespace CSVEnumerable
         public IEnumerator<T> GetEnumerator()
         {
             IEnumerator<T> innerEnumerator = GetRecordsEnumerator();
-            ResetEnumerator<T> resetEnumerator = new ResetEnumerator<T>(innerEnumerator, GetRecordsEnumerator);
+            CsvEnumerator<T> resetEnumerator = new CsvEnumerator<T>(innerEnumerator, GetRecordsEnumerator);
             return resetEnumerator;
         }
 
@@ -24,11 +24,10 @@ namespace CSVEnumerable
         {
             using var reader = new StreamReader(path);
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+
+            while (csv.Read())
             {
-                while (csv.Read())
-                {
-                    yield return csv.GetRecord<T>();
-                }
+                yield return csv.GetRecord<T>();
             }
         }
 
