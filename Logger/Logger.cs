@@ -4,39 +4,36 @@ namespace Logger
 {
     public class SimpleLogger : ILogger
     {
-        private readonly ILoggerDestination destination;
+        private readonly ILogger destination;
 
-        public SimpleLogger(Destinations destinations)
+        public SimpleLogger()
         {
-            destination = destinations switch
-            {
-                Destinations.Console => new ConsoleLogger(),
-                _ => throw new ArgumentOutOfRangeException(nameof(destinations), destinations, null)
-            };
+            destination = new ConsoleLogger();
+        }
+
+        public SimpleLogger(ILogger destination)
+        {
+            this.destination = destination;
         }
 
         public void Error(string message)
         {
-            var messageToLog = $"[Error] {message}";
-            destination.Log(messageToLog);
+            destination.Error(message);
         }
 
         public void Error(Exception exception)
         {
-            var messageToLog = $"[Error] {exception.Message}";
-            destination.Log(messageToLog);
+            destination.Error(exception);
         }
 
         public void Info(string message)
         {
-            var messageToLog = $"[Info] {message}";
-            destination.Log(messageToLog);
+            destination.Info(message);
         }
 
         public void Warning(string message)
         {
-            var messageToLog = $"[Warning] {message}";
-            destination.Log(messageToLog);
+            destination.Warning(message);
         }
     }
 }

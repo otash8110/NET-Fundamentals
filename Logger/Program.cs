@@ -1,6 +1,7 @@
 ﻿using Logger;
-using Logger.LoggerDestinations;
 
-var logger = new SimpleLogger(Destinations.Console);
+var logger = new SimpleLogger();
 
-logger.Info("Logger is working...");
+logger.Info("Testing info log");
+logger.Error(new ArgumentNullException("Testing exception error"));
+logger.Warning("Warning test...");
